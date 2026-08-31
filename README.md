@@ -28,9 +28,9 @@ An RTOS is designed to execute tasks within predictable timing constraints, maki
 Reasoning:
 
 1. The current system already handles vehicle logic and telemetry tasks successfully. With no clear technical limitation in Zephyr, replacing the RTOS would introduce unnecessary development effort and risk.
-2. Changing the RTOS would involve adapting existing drivers, modifying task scheduling behavior, rewriting parts of the software stack, and requiring the team to become familiar with a new development environment — for a student team with limited development time, this effort may not provide enough benefit.
+2. Changing the RTOS would involve adapting existing drivers, modifying task scheduling behavior, rewriting parts of the software stack, and requiring the team to become familiar with a new development environment. For a student team with limited development time, this effort may not provide enough benefit.
 3. Zephyr provides built-in support for multithreading, networking, logging, power management, and various device drivers, with strong STM32 support that lets developers rely on existing drivers and documentation instead of maintaining custom implementations.
-4. Formula Student teams experience frequent member turnover as students graduate and new members join, so an RTOS with good documentation, active community support, and a relatively easy learning curve matters — continuing with Zephyr lets future members improve the vehicle rather than spend significant time learning a new platform.
+4. Formula Student teams experience frequent member turnover as students graduate and new members join, so an RTOS with good documentation, active community support, and a relatively easy learning curve matters. Continuing with Zephyr lets future members improve the vehicle rather than spend significant time learning a new platform.
 
 Overall, Zephyr already satisfies the team's technical requirements, provides strong STM32 support, and offers an extensive set of built-in features that reduce development effort. It allows the team to build on an existing, proven software platform instead of investing valuable time migrating to a different RTOS. Unless future vehicle versions require automotive-grade functional safety certification or capabilities Zephyr can't provide, the benefits of switching to FreeRTOS or AUTOSAR OS don't outweigh the additional cost, risk, and engineering effort involved.
 
@@ -61,11 +61,11 @@ The main priority for a live telemetry system for M27 is a reliable pipeline tha
 
 ### Design Reasoning
 
-1. **Vehicle data collection** — STM32 running Zephyr continues to handle vehicle logic and collect sensor data, with communication between vehicle components over CAN Bus. A dedicated telemetry node listens to required CAN messages (vehicle speed, etc.), separating telemetry from operations.
-2. **Wireless communication** — 5 GHz Wi-Fi is used because telemetry data itself requires low bandwidth, and Wi-Fi provides lower latency and higher throughput than alternatives like LoRa or Bluetooth.
-3. **Trackside data processing** — a ground station computer receives and processes incoming telemetry. The receiver decodes CAN messages using `python-can` and `cantools`, converting raw CAN frames into readable values, which are then stored in PostgreSQL. If telemetry volume increases in future seasons, `TimescaleDB` could be layered on top since it's designed for time-series data.
-4. **Visualization** — Grafana is used for the live telemetry dashboard since it's designed for real-time metrics, integrates well with PostgreSQL, and lets both engineers and spectators view live vehicle performance data. It can also feed OBS to overlay information onto a livestream.
-5. **Post-session analytics** — Python, Pandas, and Jupyter Notebook handle ETL and analysis of historical telemetry. Processed results feed back into PostgreSQL so future dashboards and analysis tools can access enriched data. Apache Airflow could become useful if the team eventually needs an automated reporting pipeline or large-scale data processing.
+1. **Vehicle data collection**: STM32 running Zephyr continues to handle vehicle logic and collect sensor data, with communication between vehicle components over CAN Bus. A dedicated telemetry node listens to required CAN messages (vehicle speed, etc.), separating telemetry from operations.
+2. **Wireless communication**: 5 GHz Wi-Fi is used because telemetry data itself requires low bandwidth, and Wi-Fi provides lower latency and higher throughput than alternatives like LoRa or Bluetooth.
+3. **Trackside data processing**: a ground station computer receives and processes incoming telemetry. The receiver decodes CAN messages using `python-can` and `cantools`, converting raw CAN frames into readable values, which are then stored in PostgreSQL. If telemetry volume increases in future seasons, `TimescaleDB` could be layered on top since it's designed for time-series data.
+4. **Visualization**: Grafana is used for the live telemetry dashboard since it's designed for real-time metrics, integrates well with PostgreSQL, and lets both engineers and spectators view live vehicle performance data. It can also feed OBS to overlay information onto a livestream.
+5. **Post-session analytics**: Python, Pandas, and Jupyter Notebook handle ETL and analysis of historical telemetry. Processed results feed back into PostgreSQL so future dashboards and analysis tools can access enriched data. Apache Airflow could become useful if the team eventually needs an automated reporting pipeline or large-scale data processing.
 
 This architecture prioritizes reliability, simplicity, and maintainability using widely adopted, well-supported technologies. Keeping the live pipeline lightweight and performing more advanced analytics after each session lets the team deliver a responsive public dashboard without compromising vehicle performance or adding unnecessary system complexity, while providing a foundation that can expand in future seasons.
 
@@ -80,7 +80,7 @@ This architecture prioritizes reliability, simplicity, and maintainability using
 3. Since the system previously passed the same inspection test during university testing, the hardware, APPS sensor, and wiring are less likely to be the root cause. They can't be fully ruled out, but the evidence points more strongly to the recent software change.
 4. The only reported software change was increasing the logging task from `10 Hz` to `100 Hz`. Initial hypothesis: the additional logging load affected RTOS scheduling behavior. If the logging task has high priority or performs blocking operations, it may delay execution of the safety-critical control task responsible for monitoring the APPS sensor — meaning the ECU continues using the last valid accelerator value briefly before detecting the sensor fault and shutting the motor down.
 
-### Quick Fixes (competition, time-constrained)
+### Quick Fixes 
 
 - Revert logging back to 10 Hz.
 - Repeat APPS inspection test.
@@ -91,7 +91,7 @@ This architecture prioritizes reliability, simplicity, and maintainability using
 
 ### Long-Term Improvements
 
-- Separate safety tasks so they never block logging — e.g. read the sensor, place data in a queue, and let a separate logging task write it later instead of reading and writing to SD card in the same path.
+- Separate safety tasks so they never block logging, e.g. read the sensor, place data in a queue, and let a separate logging task write it later instead of reading and writing to SD card in the same path.
 - Add deadline monitoring.
 - Perform unit tests on APPS in simulation.
 - Measure CPU utilization.
