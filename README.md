@@ -6,11 +6,11 @@ An RTOS is designed to execute tasks within predictable timing constraints, maki
 
 **Key components:**
 
-- **Task scheduling** — determines when different tasks execute and ensures important tasks receive CPU time when required.
-- **Interrupt handling** — allows the system to respond quickly to external events such as sensor changes.
-- **Memory management** — ensures efficient usage of limited embedded resources.
-- **Inter-task communication and synchronization** — mechanisms such as queues, mutexes, and semaphores that allow different tasks to communicate safely.
-- **Device drivers** — allow the RTOS to interact with hardware components such as sensors, communication modules, and peripherals.
+- **Task scheduling**: determines when different tasks execute and ensures important tasks receive CPU time when required.
+- **Interrupt handling**: allows the system to respond quickly to external events such as sensor changes.
+- **Memory management**: ensures efficient usage of limited embedded resources.
+- **Inter-task communication and synchronization**: mechanisms such as queues, mutexes, and semaphores that allow different tasks to communicate safely.
+- **Device drivers**: allow the RTOS to interact with hardware components such as sensors, communication modules, and peripherals.
 
 ### RTOS Comparison
 
@@ -22,8 +22,6 @@ An RTOS is designed to execute tasks within predictable timing constraints, maki
 | Community support | Large open-source community backed by the Linux Foundation | Large open-source community | Mainly automotive industry |
 | Automotive suitability | Well suited for embedded automotive projects | Suitable for simpler embedded systems | Best suited for production automotive software |
 | Suitability for Formula Student | Excellent | Good | More complex than necessary |
-
-### Recommendation
 
 `M26` currently uses `Zephyr RTOS` running on `STM32G474RE` microcontrollers for both vehicle logic and telemetry. Based on the current requirements and existing software architecture, **Zephyr should continue to be used for M27**.
 
