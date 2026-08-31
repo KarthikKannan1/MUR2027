@@ -85,7 +85,3 @@ Steps to run:
 •	Telemetry comparison: python task5.py compare --year 2025 --event Silverstone --session Q --drivers PIA NOR
 5.	The first run downloads and caches session data locally (a ff1_cache folder gets created automatically), so it can take a little while. Subsequent runs on the same session are much faster.
 6.	Each command accepts an optional --save path/to/file.png flag to save the plot instead of just displaying it.
-
-Results
-<img width="1000" height="600" alt="Figure_1" src="https://github.com/user-attachments/assets/6bcc1808-a7dc-44f3-9c57-a370d9f808a7" />
-<img width="508" height="423" alt="Figure_2" src="https://github.com/user-attachments/assets/714818b3-0519-427f-a0f4-6128639cee8d" />
