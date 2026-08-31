@@ -75,7 +75,7 @@ This architecture prioritizes reliability, simplicity, and maintainability using
 
 ### Observations & Deduction
 
-1. When the APPS is unplugged and the driver presses the pedal: `no APPS signal` > `fault detected` > `torque set to 0` > `motor disabled` — the motor should therefore never accelerate.
+1. When the APPS is unplugged and the driver presses the pedal: `no APPS signal` > `fault detected` > `torque set to 0` > `motor disabled`, the motor should therefore never accelerate.
 2. The motor briefly ramps up, meaning the ECU doesn't detect the fault immediately. Most likely: `sensor unplugged` > `old throttle value still held` > `controller still commands torque` > `motor speeds up` > `fault detected` > `shutdown` — or the control task itself is delayed, so fault handling is delayed, the old output remains active, the motor ramps up, and the fault trips afterward.
 3. Since the system previously passed the same inspection test during university testing, the hardware, APPS sensor, and wiring are less likely to be the root cause. They can't be fully ruled out, but the evidence points more strongly to the recent software change.
 4. The only reported software change was increasing the logging task from `10 Hz` to `100 Hz`. Initial hypothesis: the additional logging load affected RTOS scheduling behavior. If the logging task has high priority or performs blocking operations, it may delay execution of the safety-critical control task responsible for monitoring the APPS sensor — meaning the ECU continues using the last valid accelerator value briefly before detecting the sensor fault and shutting the motor down.
