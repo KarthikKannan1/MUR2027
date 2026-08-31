@@ -148,11 +148,5 @@ Once a machine with internet access was available, the tool was run against real
 - Each command accepts an optional `--save path/to/file.png` flag to save the plot instead of just displaying it.
 
 ### Results
-
-**`python task5.py stint --year 2025 --event Silverstone --session R --driver PIA`**
-
-![Fuel-corrected tyre degradation](Figure_1.png)
-
-**`python task5.py compare --year 2025 --event Silverstone --session Q --drivers PIA NOR`**
-
-![Fastest lap telemetry comparison](Figure_2.png)
+<img width="1000" height="600" alt="Figure_1" src="https://github.com/user-attachments/assets/341ebc08-c0a2-49c3-b1fd-9ccea16d3356" />
+<img width="508" height="423" alt="Figure_2" src="https://github.com/user-attachments/assets/ffb686ea-c206-43f6-866f-b874c7eed4fb" />
