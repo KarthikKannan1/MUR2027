@@ -149,4 +149,4 @@ Once a machine with internet access was available, the tool was run against real
 
 ### Results
 <img width="1000" height="600" alt="Figure_1" src="https://github.com/user-attachments/assets/341ebc08-c0a2-49c3-b1fd-9ccea16d3356" />
-<img width="508" height="423" alt="Figure_2" src="https://github.com/user-attachments/assets/ffb686ea-c206-43f6-866f-b874c7eed4fb" />
+<img width="1536" height="752" alt="Figure_2" src="https://github.com/user-attachments/assets/fcdca6cc-865a-4c80-adcf-b9e6eb29ca5e" />
